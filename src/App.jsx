@@ -41,9 +41,9 @@ const getStatusBorderColor = (assignment, shiftDef) => {
     return 'border-gray-300'; // Descanso o No ha llegado
 };
 
-// --- FIX DE IMÁGENES ---
-// Al mover la carpeta FP dentro de "public", podemos acceder a ella directamente.
-// Vite copiará todo lo que esté en "public" a la raíz del sitio final.
+// --- FIX DE IMÁGENES: RUTA LIMPIA ---
+// Al tener "base: '/RegAs-System/'" en vite.config.js, usamos rutas relativas simples.
+// El navegador resolverá "FP/..." como "{dominio}/RegAs-System/FP/..." automáticamente.
 const getImagePath = (id) => {
     return `FP/${id}.jpg`;
 };
