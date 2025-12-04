@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { 
   Users, Calendar, ChevronLeft, ChevronRight, 
   Clock, MapPin, Briefcase, Plus, X, 
@@ -39,6 +39,12 @@ const getStatusBorderColor = (assignment, shiftDef) => {
     if (shiftDef.category === 'absence') return 'border-red-500 shadow-sm shadow-red-200'; // Faltó
     if (shiftDef.category === 'work' && assignment.Entrada && assignment.Entrada !== '') return 'border-emerald-500 shadow-sm shadow-emerald-200'; // Presente
     return 'border-gray-300'; // Descanso o No ha llegado
+};
+
+// --- FIX DE IMÁGENES: RUTA RELATIVA ---
+// Simplificado para evitar errores de compilación con import.meta en ciertos entornos
+const getImagePath = (id) => {
+    return `FP/${id}.jpg`;
 };
 
 const FALLBACK_AVATAR = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23cbd5e1'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
@@ -459,7 +465,7 @@ const App = () => {
         <div className="bg-slate-900 p-6 flex items-center justify-between shrink-0">
              <div className="flex items-center gap-4">
                  <div className={`w-12 h-12 rounded-full border-4 overflow-hidden bg-slate-800 ${borderColor}`}>
-                    <img src={`FP/${person.id}.jpg`} onError={(e) => { e.target.onerror = null; e.target.src = FALLBACK_AVATAR; }} className="w-full h-full object-cover" />
+                    <img src={getImagePath(person.id)} onError={(e) => { e.target.onerror = null; e.target.src = FALLBACK_AVATAR; }} className="w-full h-full object-cover" />
                  </div>
                  <div>
                     <h3 className="text-white font-bold text-lg leading-tight">{person?.name}</h3>
@@ -653,7 +659,7 @@ const App = () => {
                         <div key={p.id} onClick={() => setEditingCell({ staffId: p.id, dateStr: dateKey })} className="p-2 rounded border border-transparent hover:border-slate-300 hover:bg-slate-50 cursor-pointer transition-all flex justify-between items-center group bg-white shadow-sm relative">
                             <div className="flex items-center gap-3">
                                 <div className={`w-8 h-8 rounded-full border-2 overflow-hidden bg-slate-100 ${borderColor}`}>
-                                    <img src={`FP/${p.id}.jpg`} onError={(e) => { e.target.onerror = null; e.target.src = FALLBACK_AVATAR; }} className="w-full h-full object-cover" />
+                                    <img src={getImagePath(p.id)} onError={(e) => { e.target.onerror = null; e.target.src = FALLBACK_AVATAR; }} className="w-full h-full object-cover" />
                                 </div>
                                 <div>
                                     <div className="font-semibold text-slate-700 text-sm leading-none">{p.name}</div>
@@ -707,7 +713,7 @@ const App = () => {
                                 <td className="px-4 py-2 font-medium text-slate-700 sticky left-0 bg-white z-10 border-r border-slate-200 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] h-16">
                                     <div className="flex items-center gap-3">
                                         <div className={`w-8 h-8 rounded-full border-2 overflow-hidden bg-slate-100 flex-shrink-0 ${borderColor}`}>
-                                            <img src={`FP/${person.id}.jpg`} onError={(e) => { e.target.onerror = null; e.target.src = FALLBACK_AVATAR; }} className="w-full h-full object-cover" />
+                                            <img src={getImagePath(person.id)} onError={(e) => { e.target.onerror = null; e.target.src = FALLBACK_AVATAR; }} className="w-full h-full object-cover" />
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <div className="truncate text-sm">{person.name}</div>
@@ -824,7 +830,7 @@ const App = () => {
                                 <div className="flex-1 overflow-auto p-2 space-y-1">
                                     {staff.map(s => (
                                         <div key={s.id} onClick={() => { setSelectedStaffId(s.id); setStaffForm(s); }} className={`p-3 rounded-lg flex items-center gap-3 cursor-pointer transition-all ${selectedStaffId === s.id ? 'bg-slate-100 border-slate-300 border shadow-sm' : 'hover:bg-slate-50 border border-transparent'}`}>
-                                            <div className="w-10 h-10 rounded-full bg-slate-200 overflow-hidden shrink-0"><img src={`FP/${s.id}.jpg`} onError={(e) => { e.target.onerror = null; e.target.src = FALLBACK_AVATAR; }} className="w-full h-full object-cover" /></div>
+                                            <div className="w-10 h-10 rounded-full bg-slate-200 overflow-hidden shrink-0"><img src={getImagePath(s.id)} onError={(e) => { e.target.onerror = null; e.target.src = FALLBACK_AVATAR; }} className="w-full h-full object-cover" /></div>
                                             <div className="overflow-hidden">
                                                 <div className="font-bold text-sm truncate text-slate-800">{s.name}</div>
                                                 <div className="text-xs text-slate-400 truncate">{s.position || 'Guardia'} • {s.id}</div>
