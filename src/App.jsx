@@ -41,10 +41,11 @@ const getStatusBorderColor = (assignment, shiftDef) => {
     return 'border-gray-300'; // Descanso o No ha llegado
 };
 
-// --- FIX DE IMÁGENES: RUTA RELATIVA ---
-// Simplificado para evitar errores de compilación con import.meta en ciertos entornos
+// --- FIX DE IMÁGENES: RUTA RELATIVA EXPLÍCITA ---
+// Usamos "./" para forzar la búsqueda en el directorio actual (la carpeta del repositorio)
+// Esto soluciona problemas en GitHub Pages donde "FP/" podría buscarse en la raíz del dominio.
 const getImagePath = (id) => {
-    return `FP/${id}.jpg`;
+    return `./FP/${id}.jpg`;
 };
 
 const FALLBACK_AVATAR = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23cbd5e1'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
